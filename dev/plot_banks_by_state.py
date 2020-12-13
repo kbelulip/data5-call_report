@@ -10,8 +10,6 @@ df = pd.read_csv(data_path, sep='\t', low_memory=False)
 
 new_df = df.loc[(df['year'] == 2018) & (df['quarter'] == 3)]
 
-print(new_df.head(5))
-
 bank_count_relative = new_df['Financial Institution State'].value_counts(normalize=True)
 bank_count_absolute = new_df['Financial Institution State'].value_counts()
 
