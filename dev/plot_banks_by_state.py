@@ -4,15 +4,13 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 sns.set()
 
-year = "2018"
 path = os.path.dirname(__file__)
-data_path = os.path.join(path, "..", "data", "Call_Report_"+year, "FFIEC CDR Call Bulk POR 09302018.txt")
-rc_data_path = os.path.join(path, "..", "data", "Call_Report_"+year, "FFIEC CDR Call Schedule RC 09302018.txt")
+data_path = os.path.join(path, "..", "data", "master_cr_file_15-20.txt")
+df = pd.read_csv(data_path, sep='\t', low_memory=False)
 
-df_info = pd.read_csv(data_path, sep='\t', low_memory=False)
-df_rc = pd.read_csv(rc_data_path, sep='\t', low_memory=False, skiprows=[1])
+new_df = df.loc[(df['year'] == 2018) & (df['quarter'] == 3)]
 
-new_df = pd.merge(df_info, df_rc, how='inner', on='IDRSSD')
+print(new_df.head(5))
 
 bank_count_relative = new_df['Financial Institution State'].value_counts(normalize=True)
 bank_count_absolute = new_df['Financial Institution State'].value_counts()
