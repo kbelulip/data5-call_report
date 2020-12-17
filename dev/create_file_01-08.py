@@ -4,7 +4,7 @@ from datetime import datetime
 
 path = os.path.dirname(__file__)
 
-years = ["2001", "2002", "2004", "2005", "2006", "2007", "2008"]
+years = ["2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008"]
 quarters = ["0331", "0630", "0930", "1231"]
 concat_column = ["IDRSSD"]
 por_columns = ["FDIC Certificate Number", "OTS Docket Number", "Primary ABA Routing Number",
@@ -46,10 +46,11 @@ for year in years:
         master_df = pd.concat([master_df, buffer_df], ignore_index=True, sort=True)
 
 
-master_df['RCFD_Return_on_Assets'] = master_df['RIAD4340'] / master_df['RCFD2170']
-master_df['RCON_Return_on_Assets'] = master_df['RIAD4340'] / master_df['RCON2170']
-master_df['RCFD_Equity_Ratio'] = master_df['RCFD3210'] / master_df['RCFD2170']
-master_df['RCON_Equity_Ratio'] = master_df['RCON3210'] / master_df['RCON2170']
+
+master_df['RCFD_Return_on_Assets'] = master_df.apply(lambda x: x['RCFD2170'] if x['RCFD2170'] < 1 else x['RIAD4340'] / x['RCFD2170'], axis=1)
+master_df['RCON_Return_on_Assets'] = master_df.apply(lambda x: x['RCON2170'] if x['RCON2170'] < 1 else x['RIAD4340'] / x['RCON2170'], axis=1)
+master_df['RCFD_Equity_Ratio'] = master_df.apply(lambda x: x['RCFD2170'] if x['RCFD2170'] < 1 else x['RCFD3210'] / x['RCFD2170'], axis=1)
+master_df['RCON_Equity_Ratio'] = master_df.apply(lambda x: x['RCON2170'] if x['RCON2170'] < 1 else x['RCON3210'] / x['RCON2170'], axis=1)
 
 master_df['RCFD_Return_on_Assets'].fillna(master_df['RCON_Return_on_Assets'], inplace=True)
 master_df['RCFD_Equity_Ratio'].fillna(master_df['RCON_Equity_Ratio'], inplace=True)

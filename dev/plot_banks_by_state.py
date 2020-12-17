@@ -8,17 +8,19 @@ path = os.path.dirname(__file__)
 data_path = os.path.join(path, "..", "data", "master_cr_file.txt")
 df = pd.read_csv(data_path, sep='\t', low_memory=False)
 
-new_df = df.loc[(df['year'] == 2018) & (df['quarter'] == 3)]
+new_df1 = df.loc[(df['year'] == 2018) & (df['quarter'] == 3)]
+new_df2 = df.loc[(df['year'] == 2007) & (df['quarter'] == 3)]
 
-bank_count_relative = new_df['State'].value_counts(normalize=True)
-bank_count_absolute = new_df['State'].value_counts()
+#bank_count_relative = new_df['State'].value_counts(normalize=True)
+bank_count1 = new_df1['State'].value_counts()
+bank_count2 = new_df2['State'].value_counts()
 
-ax1 = sns.barplot(x=bank_count_absolute.index, y=bank_count_absolute.values)
-ax1.set_title("Absolute Number of Banks by state for the 3rd quarter of 2018")
-ax1.set_ylabel('Number of Banks')
+ax1 = sns.barplot(x=bank_count1.index, y=bank_count1.values)
+ax1.set_title("Absolute number of banks by state for the 3rd quarter of 2018")
+ax1.set_ylabel('Number of banks')
 ax1.set_xlabel('States')
 
-ax2 = sns.barplot(x=bank_count_relative.index, y=bank_count_relative.values)
-ax2.set_title("Relative Number of Banks by state for the 3rd quarter of 2018")
-ax2.set_ylabel('Number of Banks')
-ax2.set_xlabel('States')
+#ax2 = sns.barplot(x=bank_count2.index, y=bank_count2.values)
+#ax2.set_title("Absolute number of banks by state for the 3rd quarter of 2007")
+#ax2.set_ylabel('Number of banks')
+#ax2.set_xlabel('States')

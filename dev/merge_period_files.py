@@ -3,9 +3,9 @@ import pandas as pd
 
 path = os.path.dirname(__file__)
 data_path = os.path.join(path, "..", "data")
-cr1_path = os.path.join(data_path, "master_cr_file_01-02_04-08.txt")
+cr1_path = os.path.join(data_path, "master_cr_file_01-08.txt")
 cr2_path = os.path.join(data_path, "master_cr_file_09-13.txt")
-cr3_path = os.path.join(data_path, "master_cr_file_15-20.txt")
+cr3_path = os.path.join(data_path, "master_cr_file_14-20.txt")
 
 df1 = pd.read_csv(cr1_path, sep='\t', low_memory=False)
 df2 = pd.read_csv(cr2_path, sep='\t', low_memory=False)

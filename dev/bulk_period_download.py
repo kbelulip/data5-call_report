@@ -46,11 +46,14 @@ path = os.path.dirname(__file__)
 data_path = os.path.join(path, "..", "data")
 download_path = os.path.join(path, "..", "..", "Downloads")
 url = "https://cdr.ffiec.gov/public/PWS/DownloadBulkData.aspx"
-years = ["2020"]
+years = ["2015", "2016", "2017", "2018", "2019", "2020"]
 
 for year in years:
 
     periods = ["03/31/" + year, "06/30/" + year, "09/30/" + year, "12/31/" + year]
+
+    if year == "2020":
+        periods.pop(3)
 
     # Initialize the browser and call the url
     driver = webdriver.Chrome()

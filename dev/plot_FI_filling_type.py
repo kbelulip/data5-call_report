@@ -13,10 +13,9 @@ different_types = new_df['Filing_Type'].value_counts(normalize=True)
 
 fig, ax = plt.subplots()
 wedges, texts, autotexts = ax.pie(x=different_types.values, labels=different_types.index, autopct='%1.1f%%', startangle=90)
-ax.set_title(different_types.name)
+ax.set_title("Percentage of different kind of banks")
 legend = ["Domestic Offices Only and Total Assets Less than $5 Billion", "Domestic Offices Only", "Domestic and Foreign Offices"]
 ax.legend(wedges, legend, title="Type of Banks", loc="upper center", bbox_to_anchor=(0.5, -0.05))
-
 plt.setp(autotexts, size=8, weight="bold")
 plt.setp(texts, size=8, weight="bold")
 
