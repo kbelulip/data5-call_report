@@ -7,6 +7,7 @@ df = pd.read_csv(data_path, sep='\t', low_memory=False)
 
 # Fill missing Values wit 0
 df['Total_Capital_Ratio'] = df['Total_Capital_Ratio'].fillna("0")
+df['Leverage_Ratio'] = df['Leverage_Ratio'].fillna("0")
 
 # Due to changed data format, some rows where falsly formated
 # Remove of % and division with 100

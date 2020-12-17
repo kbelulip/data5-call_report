@@ -11,9 +11,8 @@ data_path = os.path.join(path, "..", "data", "master_cr_file.txt")
 df = pd.read_csv(data_path, sep='\t', low_memory=False)
 df['period'] = pd.to_datetime(df['period'])
 
-pivot_df = df.pivot_table(index='period', values=['Total_Assets', 'Total_Liabilities', 'Total_Equity_Capital'])
-print(pivot_df.head())
-
+pivot_df = df.pivot_table(index='period',
+                          values=['Total_Assets', 'Total_Liabilities', 'Total_Equity_Capital'])
 plt.title('Average of different balance sheet items')
 plt.plot(pivot_df.index, pivot_df.Total_Assets, '.-', label='Total Assets')
 plt.plot(pivot_df.index, pivot_df.Total_Liabilities, '.-', label='Total Liabilities')

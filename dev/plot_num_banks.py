@@ -9,8 +9,9 @@ data_path = os.path.join(path, "..", "data", "master_cr_file.txt")
 df = pd.read_csv(data_path, sep='\t', low_memory=False)
 df['period'] = pd.to_datetime(df['period'])
 
-number_banks = df.pivot_table(index='year', values=['IDRSSD'], aggfunc=pd.Series.nunique)
-
+number_banks = df.pivot_table(index='year',
+                              values=['IDRSSD'],
+                              aggfunc=pd.Series.nunique)
 plt.title('Total number of banks')
 plt.bar(number_banks.index, number_banks.IDRSSD)
 plt.xlabel('Year')
