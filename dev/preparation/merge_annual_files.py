@@ -4,7 +4,7 @@ import glob
 
 year = "2019"
 path = os.path.dirname(__file__)
-data_path = os.path.join(path, "..", "data")
+data_path = os.path.join(path, "..", "..", "data")
 target_data_path = os.path.join(data_path, "Call_Report_"+year)
 result_data_path = os.path.join(target_data_path, "Complete_Annual_Call_Report.txt")
 

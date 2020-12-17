@@ -5,7 +5,7 @@ import seaborn as sns
 sns.set()
 
 path = os.path.dirname(__file__)
-data_path = os.path.join(path, "..", "data", "master_cr_file.txt")
+data_path = os.path.join(path, "..",  "..",  "..", "data", "master_cr_file.txt")
 df = pd.read_csv(data_path, sep='\t', low_memory=False)
 
 new_df = df.loc[(df['year'] == 2018) & (df['quarter'] == 3)]
@@ -23,8 +23,8 @@ ax.set_xlabel('Average Total Assets ($ in Thousands)')
 ax.set_title('Average total assets per state for the 3rd quarter of 2018')
 
 plt.show()
-print(new_df['Financial Institution State'].unique())
-banks_with_state_0 = new_df.loc[new_df['Financial Institution State'] == '0 ']
+print(new_df['State'].unique())
+banks_with_state_0 = new_df.loc[new_df['State'] == '0 ']
 
 banks_with_state_0 = banks_with_state_0[['State', 'Bank', 'City']]
 

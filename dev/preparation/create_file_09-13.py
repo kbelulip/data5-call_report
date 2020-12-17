@@ -4,13 +4,13 @@ from datetime import datetime
 
 path = os.path.dirname(__file__)
 
-years = ["2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008"]
+years = ["2009", "2010", "2011", "2012", "2013"]
 quarters = ["0331", "0630", "0930", "1231"]
 concat_column = ["IDRSSD"]
 por_columns = ["FDIC Certificate Number", "OTS Docket Number", "Primary ABA Routing Number",
                "Financial Institution Name", "Financial Institution City", "Financial Institution State",
                "Financial Institution Filing Type"]
-rc_columns = ["RCFD2170", "RCFD2948", "RCFD3210", "RCON2170", "RCON2948", "RCON3210"]
+rc_columns = ["RCFD2170", "RCFD2948", "RCFDG105", "RCON2170", "RCON2948", "RCONG105"]
 ri_columns = ["RIAD4340", "RIAD4107", "RIAD4073", "RIAD4079", "RIAD4093"]
 rcr_columns = ["RCFD7204", "RCFD7205", "RCON7204", "RCON7205"]
 new_columns = ["period", "year", "quarter"]
@@ -19,7 +19,7 @@ master_df = pd.DataFrame(columns=concat_column + por_columns + rc_columns + ri_c
 
 
 for year in years:
-    year_data_path = os.path.join(path, "..", "data", "Call_Report_" + year)
+    year_data_path = os.path.join(path, "..", "..", "data", "Call_Report_" + year)
     print(year)
 
     for index, quarter in enumerate(quarters):
@@ -46,28 +46,27 @@ for year in years:
         master_df = pd.concat([master_df, buffer_df], ignore_index=True, sort=True)
 
 
-
-master_df['RCFD_Return_on_Assets'] = master_df.apply(lambda x: x['RCFD2170'] if x['RCFD2170'] < 1 else x['RIAD4340'] / x['RCFD2170'], axis=1)
-master_df['RCON_Return_on_Assets'] = master_df.apply(lambda x: x['RCON2170'] if x['RCON2170'] < 1 else x['RIAD4340'] / x['RCON2170'], axis=1)
-master_df['RCFD_Equity_Ratio'] = master_df.apply(lambda x: x['RCFD2170'] if x['RCFD2170'] < 1 else x['RCFD3210'] / x['RCFD2170'], axis=1)
-master_df['RCON_Equity_Ratio'] = master_df.apply(lambda x: x['RCON2170'] if x['RCON2170'] < 1 else x['RCON3210'] / x['RCON2170'], axis=1)
+master_df['RCFD_Return_on_Assets'] = master_df['RIAD4340'] / master_df['RCFD2170']
+master_df['RCON_Return_on_Assets'] = master_df['RIAD4340'] / master_df['RCON2170']
+master_df['RCFD_Equity_Ratio'] = master_df['RCFDG105'] / master_df['RCFD2170']
+master_df['RCON_Equity_Ratio'] = master_df['RCONG105'] / master_df['RCON2170']
 
 master_df['RCFD_Return_on_Assets'].fillna(master_df['RCON_Return_on_Assets'], inplace=True)
 master_df['RCFD_Equity_Ratio'].fillna(master_df['RCON_Equity_Ratio'], inplace=True)
 master_df['RCFD2170'].fillna(master_df['RCON2170'], inplace=True)
 master_df['RCFD2948'].fillna(master_df['RCON2948'], inplace=True)
-master_df['RCFD3210'].fillna(master_df['RCON3210'], inplace=True)
+master_df['RCFDG105'].fillna(master_df['RCONG105'], inplace=True)
 master_df['RCFD7204'].fillna(master_df['RCON7204'], inplace=True)
 master_df['RCFD7205'].fillna(master_df['RCON7205'], inplace=True)
 
-master_df.drop(['RCON_Return_on_Assets', 'RCON_Equity_Ratio', 'RCON2170', 'RCON2948', 'RCON3210', 'RCON7204', 'RCON7205'],
+master_df.drop(['RCON_Return_on_Assets', 'RCON_Equity_Ratio', 'RCON2170', 'RCON2948', 'RCONG105', 'RCON7204', 'RCON7205'],
                axis=1, inplace=True)
 master_df.rename(columns={'RCFD_Return_on_Assets': 'Return_on_Assets', 'RCFD_Equity_Ratio': 'Equity_Ratio',
-                          'RCFD2170': 'Total_Assets', 'RCFD2948': 'Total_Liabilities', 'RCFD3210': 'Total_Equity_Capital',
+                          'RCFD2170': 'Total_Assets', 'RCFD2948': 'Total_Liabilities', 'RCFDG105': 'Total_Equity_Capital',
                           'RCFD7204': 'Leverage_Ratio', 'RCFD7205': 'Total_Capital_Ratio', 'RIAD4340': 'Net_Income',
                           'RIAD4107': 'Total_Interest_Income', 'RIAD4073': 'Total_Interest_Expense',
                           'RIAD4079': 'Total_Noninterest_Income', 'RIAD4093': 'Total_Noninterest_Expense'},
                  inplace=True)
 
-master_data_path = os.path.join(path, "..", "data", "master_cr_file_01-08.txt")
+master_data_path = os.path.join(path, "..", "..", "data", "master_cr_file_09-13.txt")
 master_df.to_csv(master_data_path, sep='\t', index=False)

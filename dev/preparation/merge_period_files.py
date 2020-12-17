@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 path = os.path.dirname(__file__)
-data_path = os.path.join(path, "..", "data")
+data_path = os.path.join(path, "..", "..", "data")
 cr1_path = os.path.join(data_path, "master_cr_file_01-08.txt")
 cr2_path = os.path.join(data_path, "master_cr_file_09-13.txt")
 cr3_path = os.path.join(data_path, "master_cr_file_14-20.txt")

@@ -7,7 +7,7 @@ sns.set()
 rcParams['figure.figsize'] = 10,6
 
 path = os.path.dirname(__file__)
-data_path = os.path.join(path, "..", "data", "master_cr_file.txt")
+data_path = os.path.join(path, "..", "..", "data", "master_cr_file.txt")
 df = pd.read_csv(data_path, sep='\t', low_memory=False)
 df['period'] = pd.to_datetime(df['period'])
 

@@ -5,7 +5,7 @@ import seaborn as sns
 sns.set()
 
 path = os.path.dirname(__file__)
-data_path = os.path.join(path, "..", "data", "master_cr_file.txt")
+data_path = os.path.join(path, "..", "..", "data", "master_cr_file.txt")
 df = pd.read_csv(data_path, sep='\t', low_memory=False)
 
 new_df1 = df.loc[(df['year'] == 2018) & (df['quarter'] == 3)]
